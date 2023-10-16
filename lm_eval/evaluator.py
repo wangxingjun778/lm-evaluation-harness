@@ -240,7 +240,8 @@ def evaluate(
     # all responses for each (task, doc)
     process_res_queue = collections.defaultdict(list)
 
-    print(f'>>>requests: {requests}')
+    print(f'>>>requests keys: {requests.keys()}')
+    print(f'>>>likelihood value: {requests["likelihood"][0]}')
 
     # execute each type of request
     for reqtype, reqs in requests.items():
@@ -250,12 +251,17 @@ def evaluate(
         #       they should end up next to each other.
 
         print("\n>>>Running", reqtype, "requests ...")
+
         resps = getattr(lm, reqtype)([req.args for req in reqs])
-        print(f'>>>resps 1: {resps}')
+        print(f'>>>resps 1 len: {len(resps)}')
+        print(f'>>resps 1 example: {resps[0]}')
         resps = [
             x if req.index is None else x[req.index] for x, req in zip(resps, reqs)
         ]
-        print(f'>>>resps 2: {resps}')
+
+        print('\n')
+        print(f'>>>resps 2: {len(resps)}')
+        print(f'>>>resps 2 example: {resps[0]}')
         print('\n')
 
         for resp, (i, task_name, doc, doc_id) in zip(resps, requests_origin[reqtype]):
