@@ -241,7 +241,7 @@ def evaluate(
     process_res_queue = collections.defaultdict(list)
 
     print(f'>>>requests keys: {requests.keys()}')
-    print(f'>>>likelihood value: {requests["likelihood"][0]}')
+    print(f'>>>likelihood value: {requests["loglikelihood"][0]}')
 
     # execute each type of request
     for reqtype, reqs in requests.items():
