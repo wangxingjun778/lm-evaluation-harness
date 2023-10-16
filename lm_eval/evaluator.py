@@ -250,7 +250,10 @@ def evaluate(
         #       solution. we could also implement some kind of auto-grouping here;
         #       they should end up next to each other.
 
+        # reqtype: loglikelihood
         print("\n>>>Running", reqtype, "requests ...")
+        print(f'>>>lm func: {getattr(lm, reqtype)}')
+        print('\n')
 
         resps = getattr(lm, reqtype)([req.args for req in reqs])
         print(f'>>>resps 1 len: {len(resps)}')
@@ -266,6 +269,10 @@ def evaluate(
 
         for resp, (i, task_name, doc, doc_id) in zip(resps, requests_origin[reqtype]):
             process_res_queue[(task_name, doc_id)].append((i, resp))
+
+        print('\n\n')
+        print(f'>>>process_res_queue: {process_res_queue}')
+        print('\n\n')
 
     vals = collections.defaultdict(list)
 
