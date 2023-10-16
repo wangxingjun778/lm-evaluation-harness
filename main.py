@@ -90,7 +90,9 @@ def main():
         check_integrity=args.check_integrity,
     )
 
+
     dumped = json.dumps(results, indent=2)
+    print('\n>>>res:\n')
     print(dumped)
 
     if args.output_path:
