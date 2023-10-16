@@ -156,6 +156,10 @@ class TruthfulQAMultipleChoice(Task):
 
         split_idx = len(doc["mc1_targets"]["choices"])
         mc1_lls, mc2_lls = results[:split_idx], results[split_idx:]
+
+        print(f'>>mc1_lls: {mc1_lls}')
+        print(f'>>mc2_lls: {mc2_lls}')
+
         return {"mc1": mc1(mc1_lls), "mc2": mc2(mc2_lls)}
 
     def aggregation(self):
