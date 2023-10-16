@@ -68,6 +68,8 @@ def simple_evaluate(
         assert isinstance(model, lm_eval.base.LM)
         lm = model
 
+    print(f'\n>>> lm: {lm} in evaluator.py \n')
+
     if not no_cache:
         lm = lm_eval.base.CachingLM(
             lm,
@@ -82,6 +84,8 @@ def simple_evaluate(
 
     if check_integrity:
         run_task_tests(task_list=tasks)
+
+    print('>>Start evaluating by evaluator ...\n')
 
     results = evaluate(
         lm=lm,
@@ -236,6 +240,8 @@ def evaluate(
     # all responses for each (task, doc)
     process_res_queue = collections.defaultdict(list)
 
+    print(f'>>>requests: {requests}')
+
     # execute each type of request
     for reqtype, reqs in requests.items():
         # TODO: right now, this code runs multiple separate LM requests for multiple Requests differing
@@ -243,11 +249,14 @@ def evaluate(
         #       solution. we could also implement some kind of auto-grouping here;
         #       they should end up next to each other.
 
-        print("Running", reqtype, "requests")
+        print("\n>>>Running", reqtype, "requests ...")
         resps = getattr(lm, reqtype)([req.args for req in reqs])
+        print(f'>>>resps 1: {resps}')
         resps = [
             x if req.index is None else x[req.index] for x, req in zip(resps, reqs)
         ]
+        print(f'>>>resps 2: {resps}')
+        print('\n')
 
         for resp, (i, task_name, doc, doc_id) in zip(resps, requests_origin[reqtype]):
             process_res_queue[(task_name, doc_id)].append((i, resp))
