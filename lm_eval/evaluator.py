@@ -254,7 +254,9 @@ def evaluate(
         print("\n>>>Running", reqtype, "requests ...")
         print('\n')
 
-        print(f'>>>input reqs list: {[req.args for req in reqs][:5]}')
+        tmp_in_req: list = [req.args for req in reqs]
+        print(f'>>>input reqs list: {tmp_in_req[:10]}')
+        print(f'>>input len: {len(tmp_in_req)}')
         print('')
 
         print(f'>>>lm func: {lm}')
