@@ -36,7 +36,7 @@ class HFLM(BaseLM):
         super().__init__()
 
         import sys
-        print("HFLM init stop ... !!!!\n\n")
+        print(f'>>>pretrained: {pretrained}, revision: {revision}, subfolder: {subfolder}, tokenizer: {tokenizer}, batch_size: {batch_size}, max_batch_size: {max_batch_size}, max_length: {max_length}, load_in_8bit: {load_in_8bit}, trust_remote_code: {trust_remote_code}, dtype: {dtype}')
         sys.exit(0)
 
         # Initialize model
