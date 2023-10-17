@@ -308,6 +308,7 @@ def evaluate(
         #       solution. we could also implement some kind of auto-grouping here;
         #       they should end up next to each other.
 
+        # truthfulqa_mc: loglikelihood   truthfulqa_gen: greedy_until
         print("** Running", reqtype, "requests ...\n")
         print(f'>>> LM:  name: {lm.__class__.__name__}, type: {type(lm)}, origin obj: {lm}')
         resps = getattr(lm, reqtype)([req.args for req in reqs])
