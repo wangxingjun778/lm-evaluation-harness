@@ -436,9 +436,7 @@ class AutoSeq2SeqLM(HuggingFaceAutoLM):
             return self._max_length
         return self._DEFAULT_MAX_LENGTH
 
-    def loglikelihood(
-        self, requests: List[Tuple[str, str]]
-    ) -> List[Tuple[float, bool]]:
+    def loglikelihood(self, requests: List[Tuple[str, str]]) -> List[Tuple[float, bool]]:
         new_requests = []
         for chunk in utils.chunks(requests, self.batch_size):
             context, continuation = zip(*chunk)
@@ -462,6 +460,9 @@ class AutoSeq2SeqLM(HuggingFaceAutoLM):
             new_requests.append(
                 ((context, continuation), context_enc, continuation_enc)
             )
+
+        print(f'>>> new_requests: {new_requests}')
+
         return self._loglikelihood_tokens(new_requests)
 
     def loglikelihood_rolling(self, requests: List[Tuple[str, str]]) -> List[float]:

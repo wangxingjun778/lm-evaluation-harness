@@ -157,8 +157,10 @@ class TruthfulQAMultipleChoice(Task):
         split_idx = len(doc["mc1_targets"]["choices"])
         mc1_lls, mc2_lls = results[:split_idx], results[split_idx:]
 
-        print(f'>>mc1_lls: {mc1_lls}')
-        print(f'>>mc2_lls: {mc2_lls}')
+        # >>mc1_lls: [-8.421875, -20.25, -27.5, -14.4609375, -16.4375]
+        # >>mc2_lls: [-8.421875, -7.57421875, -20.25, -27.5, -14.4609375, -16.4375]
+        # print(f'>>mc1_lls: {mc1_lls}')
+        # print(f'>>mc2_lls: {mc2_lls}')
 
         return {"mc1": mc1(mc1_lls), "mc2": mc2(mc2_lls)}
 
