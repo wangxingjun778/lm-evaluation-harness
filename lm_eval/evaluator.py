@@ -309,7 +309,7 @@ def evaluate(
         #       they should end up next to each other.
 
         print("** Running", reqtype, "requests ...\n")
-        print(f'>>> LM: {lm.__class__.__name__}')
+        print(f'>>> LM:  name: {lm.__class__.__name__}, type: {type(lm)}, origin obj: {lm}')
         resps = getattr(lm, reqtype)([req.args for req in reqs])
         resps = [
             x if req.index is None else x[req.index] for x, req in zip(resps, reqs)
