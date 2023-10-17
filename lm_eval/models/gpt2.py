@@ -35,6 +35,10 @@ class HFLM(BaseLM):
     ):
         super().__init__()
 
+        import sys
+        print("HFLM init stop ... !!!!\n\n")
+        sys.exit(0)
+
         # Initialize model
         if isinstance(pretrained, transformers.PreTrainedModel):
             self.model = pretrained

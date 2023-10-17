@@ -82,7 +82,7 @@ def simple_evaluate(
             },
         )
 
-        print(f'>>> lm obj in evaluator: {lm}')
+        print(f'>>> lm obj in evaluator: {lm}')     # lm_eval.models.gpt2.HFLM
 
     elif isinstance(model, transformers.PreTrainedModel):
         lm = lm_eval.models.get_model("hf-causal")(
