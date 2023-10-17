@@ -912,7 +912,8 @@ class CachingLM:
         if not callable(lm_attr):
             return lm_attr
 
-        print(f'>>>get attr: {attr}')
+        print(f'>>>attr name: {attr}')
+        print(f'>>>lm_attr: {lm_attr}')
         import sys
         print('>>>> stop here <<<')
         sys.exit(0)
