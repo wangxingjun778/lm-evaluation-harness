@@ -70,6 +70,8 @@ def simple_evaluate(
 
     assert tasks != [], "No tasks specified"
 
+    print(f'>>>model in evaluator: {model}')
+
     if isinstance(model, str):
         if model_args is None:
             model_args = ""

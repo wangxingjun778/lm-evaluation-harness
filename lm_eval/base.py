@@ -212,7 +212,7 @@ class BaseLM(LM):
     def loglikelihood(self, requests):
         new_reqs = []
 
-        print(f'\n>>>loglikelihood requests\n: {requests}')
+        print(f'\n>>> BaseLM loglikelihood requests\n: {requests}')
 
         for context, continuation in requests:
             if context == "":
