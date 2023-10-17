@@ -212,7 +212,7 @@ class BaseLM(LM):
     def loglikelihood(self, requests):
         new_reqs = []
 
-        print(f'\n>>>loglikelihood requests\n:  len-->{len(requests)}')
+        print(f'\n>>>loglikelihood requests\n: {requests}')
 
         for context, continuation in requests:
             if context == "":
@@ -224,9 +224,6 @@ class BaseLM(LM):
                 context_enc, continuation_enc = self._encode_pair(context, continuation)
 
             new_reqs.append(((context, continuation), context_enc, continuation_enc))
-
-        print(
-            f'\n>>>loglikelihood new_reqs\n:  len-->{len(new_reqs)}, type-->{type(new_reqs)}, requests[0]-->{new_reqs[0]}')
 
         return self._loglikelihood_tokens(new_reqs)
 
