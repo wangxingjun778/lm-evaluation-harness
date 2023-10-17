@@ -930,14 +930,13 @@ class CachingLM:
                     remaining_reqs.append(req)
 
             # actually run the LM on the requests that do not have cached results
+            print(f'>>> real func: {getattr(self.lm, attr)}')
+            print(f'>>> real input: {remaining_reqs}')
 
-            print(f'>>>remaining_reqs\n: {len(remaining_reqs)}')
-            print(f'>>>example for remaining_reqs: {remaining_reqs[0]}')
-            print('')
 
             import sys
-            print('>>> stop here <<<')
-            sys.exit(0)
+            print('>>>>> stop here >>>>>>>')
+            sys.exit()
 
             rem_res = getattr(self.lm, attr)(remaining_reqs)
 
