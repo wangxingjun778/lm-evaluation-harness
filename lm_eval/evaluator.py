@@ -70,8 +70,6 @@ def simple_evaluate(
 
     assert tasks != [], "No tasks specified"
 
-    print(f'>>>model in evaluator: {model}')
-
     if isinstance(model, str):
         if model_args is None:
             model_args = ""
@@ -83,6 +81,9 @@ def simple_evaluate(
                 "device": device,
             },
         )
+
+        print(f'>>> lm obj in evaluator: {lm}')
+
     elif isinstance(model, transformers.PreTrainedModel):
         lm = lm_eval.models.get_model("hf-causal")(
             pretrained=model,
