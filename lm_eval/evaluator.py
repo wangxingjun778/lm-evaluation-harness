@@ -272,8 +272,8 @@ def evaluate(
 
         print('\n\n')
         # one of values: ('truthfulqa_mc', 0): [(0, -12.4453125), (1, -12.3671875), (2, -31.84375), (3, -15.8203125), (4, -12.4453125), (5, -12.3671875), (6, -31.84375), (7, -15.8203125)]
-        print(f'>>>process_res_queue:\n {process_res_queue}')
-        print('\n\n')
+        # print(f'>>>process_res_queue:\n {process_res_queue}')
+        # print('\n\n')
 
     vals = collections.defaultdict(list)
 
