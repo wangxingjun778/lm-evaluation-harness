@@ -217,9 +217,6 @@ class BaseLM(LM):
         new_reqs = []
 
         print(f'\n>>> BaseLM loglikelihood requests\n: {requests}')
-        import sys
-        sys.exit(0)
-
 
         for context, continuation in requests:
             if context == "":
