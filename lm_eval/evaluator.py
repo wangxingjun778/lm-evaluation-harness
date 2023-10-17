@@ -254,10 +254,10 @@ def evaluate(
         print("\n>>>Running", reqtype, "requests ...")
         print('\n')
 
-        print(f'>>>input reqs list: {[req.args for req in reqs]}')
+        print(f'>>>input reqs list: {[req.args for req in reqs][:5]}')
         print('')
 
-        print(f'>>>lm func: {type(getattr(lm, reqtype))}')
+        print(f'>>>lm func: {lm}')
         resps = getattr(lm, reqtype)([req.args for req in reqs])
         print(f'>>>resps 1 len: {len(resps)}')
         print(f'>>resps 1 example: {resps[0]}')
