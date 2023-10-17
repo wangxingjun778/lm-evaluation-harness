@@ -912,12 +912,6 @@ class CachingLM:
         if not callable(lm_attr):
             return lm_attr
 
-        print(f'>>>attr name: {attr}')
-        print(f'>>>lm_attr: {lm_attr}')
-        import sys
-        print('>>>> stop here <<<')
-        sys.exit(0)
-
         def fn(requests):
             res = []
             remaining_reqs = []
@@ -936,6 +930,17 @@ class CachingLM:
                     remaining_reqs.append(req)
 
             # actually run the LM on the requests that do not have cached results
+
+            print(f'>>>remaining_reqs\n: {len(remaining_reqs)}')
+            print(f'>>>example for remaining_reqs: {remaining_reqs[0]}')
+            print('')
+            import pdb
+            pdb.set_trace()
+
+            import sys
+            print('>>> stop here <<<')
+            sys.exit(0)
+
             rem_res = getattr(self.lm, attr)(remaining_reqs)
 
             # stick the new ones back into the list and also cache any of the new ones
