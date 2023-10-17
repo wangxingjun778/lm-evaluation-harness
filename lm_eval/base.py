@@ -113,8 +113,8 @@ class LM(abc.ABC):
         args = utils.simple_parse_args_string(arg_string)
         args2 = {k: v for k, v in additional_config.items() if v is not None}
 
-        print(f'>>>args in create_from_arg_string: {args}')
-        print(f'>>>args2 in create_from_arg_string: {args2}')
+        print(f'>>>args in create_from_arg_string: {args}')     # {'pretrained': 'EleutherAI/pythia-160m'}
+        print(f'>>>args2 in create_from_arg_string: {args2}')   # {'device': 'cuda:0'}
 
         return cls(**args, **args2)
 

@@ -35,9 +35,8 @@ class HFLM(BaseLM):
     ):
         super().__init__()
 
-        import sys
-        print(f'>>>pretrained: {pretrained}, revision: {revision}, subfolder: {subfolder}, tokenizer: {tokenizer}, batch_size: {batch_size}, max_batch_size: {max_batch_size}, max_length: {max_length}, load_in_8bit: {load_in_8bit}, trust_remote_code: {trust_remote_code}, dtype: {dtype}')
-        sys.exit(0)
+        # pretrained: EleutherAI/pythia-160m, device: cuda:0, revision: main, subfolder: None, tokenizer: None, batch_size: 1, max_batch_size: 512, max_length: None, load_in_8bit: False, trust_remote_code: False, dtype: auto
+        print(f'>>>pretrained: {pretrained}, device: {device}, revision: {revision}, subfolder: {subfolder}, tokenizer: {tokenizer}, batch_size: {batch_size}, max_batch_size: {max_batch_size}, max_length: {max_length}, load_in_8bit: {load_in_8bit}, trust_remote_code: {trust_remote_code}, dtype: {dtype}')
 
         # Initialize model
         if isinstance(pretrained, transformers.PreTrainedModel):
@@ -98,6 +97,11 @@ class HFLM(BaseLM):
             raise TypeError(
                 "Parameter pretrained should be of type str or transformers.PreTrainedModel"
             )
+
+        print(f'>>>model object in HFLM init: {self.model}')
+
+        import sys
+        sys.exit(0)
 
         self.model.eval()
 
