@@ -238,7 +238,7 @@ def evaluate(
         rnd = random.Random()
         rnd.seed(42)
         rnd.shuffle(task_docs)
-        print(f"Task: {task_name}; number of docs: {len(task_docs)}")
+        print(f">>Task: {task_name}; number of docs: {len(task_docs)}")
 
         if write_out:
             prompt_details = []
@@ -269,9 +269,9 @@ def evaluate(
             # print the prompt for the first few documents
             if doc_id < 1:
                 print(
-                    f"Task: {task_name}; document {doc_id}; context prompt (starting on next line):\n{ctx}\n(end of prompt on previous line)"
+                    f"**Task: {task_name}; document {doc_id}; context prompt (starting on next line):\n{ctx}\n(end of prompt on previous line)"
                 )
-                print("Requests:", reqs)
+                print("**Requests:\n", reqs)
 
             if not isinstance(reqs, (list, tuple)):
                 reqs = [reqs]
@@ -308,7 +308,8 @@ def evaluate(
         #       solution. we could also implement some kind of auto-grouping here;
         #       they should end up next to each other.
 
-        print("Running", reqtype, "requests")
+        print("** Running", reqtype, "requests ...\n")
+        print(f'>>> LM: {lm.__class__.__name__}')
         resps = getattr(lm, reqtype)([req.args for req in reqs])
         resps = [
             x if req.index is None else x[req.index] for x, req in zip(resps, reqs)
