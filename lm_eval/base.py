@@ -387,6 +387,7 @@ class BaseLM(LM):
 
             batched_inps = torch.cat(inps, dim=0)  # [batch, padding_length]
             if tmp_i == 0:
+                # torch.Size([1, 222])
                 print(f'>>> real input -- batched_inps in _loglikelihood_tokens in base.py\n: \n>data: {batched_inps},  \n>shape: {batched_inps.shape}')
 
             # TODO: Note by jason: core function call !!

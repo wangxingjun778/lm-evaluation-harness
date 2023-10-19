@@ -194,8 +194,10 @@ class HFLM(BaseLM):
         """
         with torch.no_grad():
             # return self.model(inps)[0]
+
+            # res: CausalLMOutputWithPast
             res = self.model(inps)
-            print(f'>>>res in _model_call\n: >shape\n: {res.shape}, {res[0].shape}')
+            print(f'>>>res in _model_call\n: >shape\n: {res[0].shape}')
             print(f'>>>raw res\n: {res}')
             import sys
             print('>>> stop here <<<')
