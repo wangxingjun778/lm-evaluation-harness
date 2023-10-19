@@ -343,8 +343,8 @@ def evaluate(
     vals = collections.defaultdict(list)
 
     # unpack results and sort back in order and return control to Task
-    # process_res_queue item: xxx
-    print(f'>>>process_res_queue: {list(process_res_queue.items())[0]}')
+    # process_res_queue item: (('truthfulqa_mc', 0), [(0, -12.4453125), (1, -12.3671875), (2, -31.84375), (3, -15.8203125), (4, -12.4453125), (5, -12.3671875), (6, -31.84375), (7, -15.8203125)])
+    print(f'>>>process_res_queue: {list(process_res_queue.items())[1]}')
     import sys
     sys.exit(0)
     for (task_name, doc_id), requests in process_res_queue.items():
