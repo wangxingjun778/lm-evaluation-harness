@@ -316,8 +316,8 @@ def evaluate(
         resps = getattr(lm, reqtype)([req.args for req in reqs])
 
         print(f'>>>type resp: {type(resps)}')   # list
-        print(f'>>>len resp: {len(resps)}')     # 1
-        print(f'>>> resp example: {resps[0]}')
+        print(f'>>>len resp: {len(resps)}')     # 9996
+        print(f'>>> resp example: {resps[0]}')  # (-12.4453125, False)
 
         import sys
         print('>>>> stop here <<<< ...')

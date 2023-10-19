@@ -913,6 +913,8 @@ class CachingLM:
             return lm_attr
 
         def fn(requests):
+            print(f'>>> Call to inner func: {attr} \n')
+
             res = []
             remaining_reqs = []
 
