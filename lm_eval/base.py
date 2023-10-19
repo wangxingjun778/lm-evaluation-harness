@@ -386,7 +386,11 @@ class BaseLM(LM):
             for (cache_key, _, _), logits, inp, inplen, cont_toks in zip(
                 chunk, multi_logits, inps, inplens, cont_toks_list
             ):
-                print(f'>>>zip in _loglikelihood_tokens:\n  >logits: {logits.shape}\n  >inp: {inp.shape}\n  >inplen: {inplen}\n  >cont_toks: {len(cont_toks)}')
+                #   >logits: torch.Size([83, 50304])   shape=(padding_length, vocab)
+                #   >inp: torch.Size([1, 83])
+                #   >inplen: 83
+                #   >cont_toks: xxx
+                print(f'>>>zip in _loglikelihood_tokens:\n  >logits: {logits.shape}\n  >inp: {inp.shape}\n  >inplen: {inplen}\n  >cont_toks: {cont_toks}')
 
                 # Slice to original seq length
                 contlen = len(cont_toks)
