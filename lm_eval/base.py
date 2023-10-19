@@ -932,14 +932,6 @@ class CachingLM:
                     remaining_reqs.append(req)
 
             # actually run the LM on the requests that do not have cached results
-            print(f'>>> real func: {getattr(self.lm, attr)}')
-            print(f'>>> real input: {remaining_reqs}')      # TODO: remaining_reqs = []  why is this empty?
-
-
-            # import sys
-            # print('>>>>> stop here >>>>>>>')
-            # sys.exit()
-
             rem_res = getattr(self.lm, attr)(remaining_reqs)
 
             # stick the new ones back into the list and also cache any of the new ones
@@ -954,6 +946,8 @@ class CachingLM:
                 hsh = hash_args(attr, req)
                 self.dbdict[hsh] = r
             self.dbdict.commit()
+
+            print(f'>>> len res in inner fn: {len(res)}')
 
             return res
 
