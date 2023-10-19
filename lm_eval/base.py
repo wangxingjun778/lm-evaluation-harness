@@ -216,6 +216,7 @@ class BaseLM(LM):
     def loglikelihood(self, requests):
 
         print(f'>>>call loglikelihood in base.py, len of requests: {len(requests)}')
+        print(f'>>request example in loglikelihood in base.py: {requests[0]}')
 
         new_reqs = []
         for context, continuation in requests:
@@ -279,6 +280,8 @@ class BaseLM(LM):
         # TODO: implement some kind of efficient-request-middleware that lumps together requests with the same context
         res = []
 
+        print(f'>>> input requests in _loglikelihood_tokens in base.py\n: {requests[0]}')
+
         def _collate(x):
             # the negative sign on len(toks) sorts descending - this has a few advantages:
             # - time estimates will always be over not underestimates, which is more useful for planning
@@ -308,6 +311,7 @@ class BaseLM(LM):
             print(f"Determined largest batch size: {self.batch_sizes[sched]}")
             return self.batch_sizes[sched]
 
+        tmp_i = 0
         for chunk in utils.chunks(
             tqdm(reordered_requests, disable=disable_tqdm),
             n=self.batch_size
@@ -331,6 +335,10 @@ class BaseLM(LM):
             # tensors, then we pack them together into a batch, call the model, and then pick it all apart
             # again because vectorizing is annoying
 
+            if tmp_i == 0:
+                print(f'>> chunk in _loglikelihood_tokens in base.py\n:  \n>type: {type(chunk)}, \n>chunk: {chunk}')
+
+            tmp_j = 0
             for _, context_enc, continuation_enc in chunk:
                 # sanity check
                 assert len(context_enc) > 0
@@ -369,11 +377,19 @@ class BaseLM(LM):
                     dim=0,
                 )
 
+                if tmp_j == 0:
+                    print(f'>>> inp in _loglikelihood_tokens in base.py\n: \n>data: {inp},  \n>shape: {inp.shape}')
+                    tmp_j += 1
+
                 inps.append(inp.unsqueeze(0))  # [1, padding_length]
                 cont_toks_list.append(cont)
                 inplens.append(inplen)
 
             batched_inps = torch.cat(inps, dim=0)  # [batch, padding_length]
+            if tmp_i == 0:
+                print(f'>>> real input -- batched_inps in _loglikelihood_tokens in base.py\n: \n>data: {batched_inps},  \n>shape: {batched_inps.shape}')
+
+            # TODO: Note: core function call !!
             multi_logits = F.log_softmax(
                 self._model_call(batched_inps), dim=-1
             ).cpu()  # [batch, padding_length, vocab]
@@ -412,6 +428,8 @@ class BaseLM(LM):
                     self.cache_hook.add_partial("loglikelihood", cache_key, answer)
 
                 res.append(answer)
+
+                tmp_i += 1
 
         return re_ord.get_original(res)
 
