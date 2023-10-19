@@ -139,6 +139,8 @@ class TruthfulQAMultipleChoice(Task):
             The document as returned from training_docs, validation_docs, or test_docs.
         :param results:
             The results of the requests created in construct_requests.
+            see: process_res_queue in evaluator.py
+            e.g.  [(0, -9.6796875), (1, -17.40625), (2, -28.671875), (3, -16.390625), (4, -24.0), (5, -19.625), (6, -15.6640625), (7, -21.515625), (8, -9.6796875), (9, -10.609375), (10, -10.3515625), (11, -17.40625), (12, -28.671875), (13, -16.390625), (14, -24.0), (15, -19.625), (16, -15.6640625), (17, -21.515625)]
         """
 
         def mc1(lls):

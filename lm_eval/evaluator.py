@@ -343,10 +343,8 @@ def evaluate(
     vals = collections.defaultdict(list)
 
     # unpack results and sort back in order and return control to Task
-    # process_res_queue item: (('truthfulqa_mc', 0), [(0, -12.4453125), (1, -12.3671875), (2, -31.84375), (3, -15.8203125), (4, -12.4453125), (5, -12.3671875), (6, -31.84375), (7, -15.8203125)])
-    print(f'>>>process_res_queue: {list(process_res_queue.items())[1]}')
-    import sys
-    sys.exit(0)
+    # process_res_queue item: (('truthfulqa_mc', 1), [(0, -9.6796875), (1, -17.40625), (2, -28.671875), (3, -16.390625), (4, -24.0), (5, -19.625), (6, -15.6640625), (7, -21.515625), (8, -9.6796875), (9, -10.609375), (10, -10.3515625), (11, -17.40625), (12, -28.671875), (13, -16.390625), (14, -24.0), (15, -19.625), (16, -15.6640625), (17, -21.515625)])
+
     for (task_name, doc_id), requests in process_res_queue.items():
         requests.sort(key=lambda x: x[0])
         requests = [x[1] for x in requests]
@@ -355,6 +353,7 @@ def evaluate(
         doc = docs[(task_name, doc_id)]
 
         metrics = task.process_results(doc, requests)
+        print(f'>>>metrics in evaluator:\n  >metrics:\n {metrics}, \n>task_name: {task_name}')
         for metric, value in metrics.items():
             vals[(task_name, metric)].append(value)
 
@@ -365,6 +364,8 @@ def evaluate(
             if decontaminate and task_name in overlaps:
                 if doc_id not in overlaps[task_name]:
                     vals[(task_name, metric + decontaminate_suffix)].append(value)
+
+    print(f'>>>vals in evaluator: {vals}')
 
     # aggregate results
     for (task_name, metric), items in vals.items():
