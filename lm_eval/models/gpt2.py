@@ -195,7 +195,7 @@ class HFLM(BaseLM):
         with torch.no_grad():
             # return self.model(inps)[0]
             res = self.model(inps)
-            print(f'>>>res in _model_call: {res}')
+            print(f'>>>res in _model_call\n: >shape\n: {res.shape}, {res[0].shape}')
             return res[0]
 
     def _model_generate(self, context, max_length, eos_token_id):
