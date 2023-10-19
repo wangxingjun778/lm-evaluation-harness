@@ -220,7 +220,6 @@ class BaseLM(LM):
 
         new_reqs = []
         for context, continuation in requests:
-            context = "王兴军王兴军" + context
             if context == "":
                 # end of text as context
                 context_enc, continuation_enc = [self.eot_token_id], self.tok_encode(

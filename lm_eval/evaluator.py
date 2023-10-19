@@ -353,6 +353,8 @@ def evaluate(
         doc = docs[(task_name, doc_id)]
 
         # one of metrics: {'mc1': False, 'mc2': 0.9193982485517667}
+        print(f'>>>doc before process_results: {doc}')
+        print(f'>>>requests before process_results: {requests}')
         metrics = task.process_results(doc, requests)
         for metric, value in metrics.items():
             vals[(task_name, metric)].append(value)
