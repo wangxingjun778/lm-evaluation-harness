@@ -343,6 +343,10 @@ def evaluate(
     vals = collections.defaultdict(list)
 
     # unpack results and sort back in order and return control to Task
+    # process_res_queue item: xxx
+    print(f'>>>process_res_queue: {list(process_res_queue.items())[0]}')
+    import sys
+    sys.exit(0)
     for (task_name, doc_id), requests in process_res_queue.items():
         requests.sort(key=lambda x: x[0])
         requests = [x[1] for x in requests]

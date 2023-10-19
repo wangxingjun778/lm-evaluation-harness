@@ -230,15 +230,7 @@ class BaseLM(LM):
 
             new_reqs.append(((context, continuation), context_enc, continuation_enc))
 
-        # return self._loglikelihood_tokens(new_reqs)
-
-        res = self._loglikelihood_tokens(new_reqs)
-        print(f'>>>res in loglikelihood in base.py:  type: {type(res)}, data: {res}')
-
-        import sys
-        print('>>> stop here <<<')
-        sys.exit(0)
-        return res
+        return self._loglikelihood_tokens(new_reqs)   # list, [(-12.4453125, False), (-12.3671875, False), ...]
 
     def loglikelihood_rolling(self, requests):
         # TODO: Implement caching once we've confirmed the perplexity implementation
@@ -319,7 +311,6 @@ class BaseLM(LM):
             print(f"Determined largest batch size: {self.batch_sizes[sched]}")
             return self.batch_sizes[sched]
 
-        tmp_i = 0
         for chunk in utils.chunks(
             tqdm(reordered_requests, disable=disable_tqdm),
             n=self.batch_size
@@ -343,10 +334,6 @@ class BaseLM(LM):
             # tensors, then we pack them together into a batch, call the model, and then pick it all apart
             # again because vectorizing is annoying
 
-            if tmp_i == 0:
-                print(f'>> chunk in _loglikelihood_tokens in base.py\n:  \n>type: {type(chunk)}, \n>chunk: {chunk}')
-
-            tmp_j = 0
             for _, context_enc, continuation_enc in chunk:
                 # sanity check
                 assert len(context_enc) > 0
@@ -385,18 +372,11 @@ class BaseLM(LM):
                     dim=0,
                 )
 
-                if tmp_j == 0 and tmp_j == 0:
-                    print(f'>>> inp in _loglikelihood_tokens in base.py\n: \n>data: {inp},  \n>shape: {inp.shape}')
-                    tmp_j += 1
-
                 inps.append(inp.unsqueeze(0))  # [1, padding_length]
                 cont_toks_list.append(cont)
                 inplens.append(inplen)
 
             batched_inps = torch.cat(inps, dim=0)  # [batch, padding_length]
-            if tmp_i == 0:
-                # torch.Size([1, 222])
-                print(f'>>> real input -- batched_inps in _loglikelihood_tokens in base.py\n: \n>data: {batched_inps},  \n>shape: {batched_inps.shape}')
 
             # TODO: Note by jason: core function call !!
             multi_logits = F.log_softmax(
@@ -437,8 +417,6 @@ class BaseLM(LM):
                     self.cache_hook.add_partial("loglikelihood", cache_key, answer)
 
                 res.append(answer)
-
-                tmp_i += 1
 
         return re_ord.get_original(res)
 
