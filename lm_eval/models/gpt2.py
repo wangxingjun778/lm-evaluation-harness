@@ -193,16 +193,8 @@ class HFLM(BaseLM):
         logits returned from the model
         """
         with torch.no_grad():
-            # return self.model(inps)[0]
-
-            # res: CausalLMOutputWithPast
-            res = self.model(inps)
-            print(f'>>>res in _model_call\n: >shape\n: {res[0].shape}')
-            print(f'>>>raw res\n: {res}')
-            import sys
-            print('>>> stop here <<<')
-            sys.exit(0)
-            return res[0]
+            # let res = self.model(inps): CausalLMOutputWithPast; res[0] shape: torch.Size([1, 222, 50304])
+            return self.model(inps)[0]
 
     def _model_generate(self, context, max_length, eos_token_id):
         generation_kwargs = {"do_sample": False, "max_length": max_length}
