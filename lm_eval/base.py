@@ -389,8 +389,8 @@ class BaseLM(LM):
                 #   >logits: torch.Size([83, 50304])   shape=(padding_length, vocab)
                 #   >inp: torch.Size([1, 83])
                 #   >inplen: 83
-                #   >cont_toks: xxx
-                print(f'>>>zip in _loglikelihood_tokens:\n  >logits: {logits.shape}\n  >inp: {inp.shape}\n  >inplen: {inplen}\n  >cont_toks: {cont_toks}')
+                #   >cont_toks: [378]
+                print(f'>>>zip in _loglikelihood_tokens:\n  >logits: {logits.shape}\n  >inp: {inp.shape}\n  >inplen: {inplen}\n  >cont_toks: {cont_toks}\n, >pandding_length: {padding_length}')
 
                 # Slice to original seq length
                 contlen = len(cont_toks)
