@@ -15,6 +15,7 @@ class DryrunLM(LM):
         return cls()
 
     def loglikelihood(self, requests):
+        print(f'>>>call loglikelihood in cost estimate: {len(requests)}')
         res = []
 
         for ctx, cont in requests:

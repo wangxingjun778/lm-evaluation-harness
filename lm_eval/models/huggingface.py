@@ -597,6 +597,7 @@ class AutoSeq2SeqLM(HuggingFaceAutoLM):
     AUTO_PEFT_CLASS = peft.PeftModel
 
     def loglikelihood(self, requests: List[Tuple[str, str]]) -> List[Tuple[float, bool]]:
+        print(f'>>>Call loglikelihood in AutoSeq2SeqLM: {len(requests)}')
         new_requests = []
         for chunk in utils.chunks(requests, self.batch_size):
             context, continuation = zip(*chunk)

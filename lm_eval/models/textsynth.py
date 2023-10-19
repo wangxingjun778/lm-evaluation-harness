@@ -87,6 +87,7 @@ class TextSynthLM(BaseLM):
         raise NotImplementedError()
 
     def loglikelihood(self, requests):
+        print(f'>>> Call loglikelihood in textsynth.py: {len(requests)}')
         res = []
         for context, continuation in tqdm(requests):
             response = textsynth_completion(
