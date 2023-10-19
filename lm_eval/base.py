@@ -390,6 +390,7 @@ class BaseLM(LM):
                 #   >inp: torch.Size([1, 83])
                 #   >inplen: 83
                 #   >cont_toks: [378]
+                #   >padding_length: 83
                 print(f'>>>zip in _loglikelihood_tokens:\n  >logits: {logits.shape}\n  >inp: {inp.shape}\n  >inplen: {inplen}\n  >cont_toks: {cont_toks}\n, >pandding_length: {padding_length}')
 
                 # Slice to original seq length
@@ -406,7 +407,7 @@ class BaseLM(LM):
                 cont_toks = torch.tensor(cont_toks, dtype=torch.long).unsqueeze(
                     0
                 )  # [1, seq]
-                max_equal = (greedy_tokens == cont_toks).all()
+                max_equal = (greedy_tokens == cont_toks).all()      # tensor(True) or tensor(False)
 
                 # Obtain log-probs at the corresponding continuation token indices
                 # last_token_slice = logits[:, -1, :].squeeze(0).tolist()
@@ -416,6 +417,7 @@ class BaseLM(LM):
 
                 # Answer: (log prob, is-exact-match) -->Example: (-6.39453125, False)
                 answer = (float(logits.sum()), bool(max_equal))
+                print(f'>>>answer: {answer}')
 
                 # partial caching
                 if cache_key is not None:
