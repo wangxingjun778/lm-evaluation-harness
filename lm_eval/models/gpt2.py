@@ -194,7 +194,12 @@ class HFLM(BaseLM):
         """
         with torch.no_grad():
             # let res = self.model(inps): CausalLMOutputWithPast; res[0] shape: torch.Size([1, 222, 50304])
-            return self.model(inps)[0]
+            # return self.model(inps)[0]
+
+            res = self.model(inps)[0]
+            print(f'>>>res shape: {res.shape}')
+            print(f'>>>res: {res}')
+            return res
 
     def _model_generate(self, context, max_length, eos_token_id):
         generation_kwargs = {"do_sample": False, "max_length": max_length}
