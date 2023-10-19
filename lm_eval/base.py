@@ -411,6 +411,7 @@ class BaseLM(LM):
 
                 # Answer: (log prob, is-exact-match)
                 answer = (float(logits.sum()), bool(max_equal))
+                print(f'>>>answer in _loglikelihood_tokens: {answer}')
 
                 # partial caching
                 if cache_key is not None:
