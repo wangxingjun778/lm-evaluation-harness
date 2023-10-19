@@ -214,6 +214,9 @@ class BaseLM(LM):
         return context_enc, continuation_enc
 
     def loglikelihood(self, requests):
+
+        print(f'>>>call loglikelihood in base.py, len of requests: {len(requests)}')
+
         new_reqs = []
         for context, continuation in requests:
             if context == "":
