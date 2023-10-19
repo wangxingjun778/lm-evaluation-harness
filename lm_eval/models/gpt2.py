@@ -196,6 +196,10 @@ class HFLM(BaseLM):
             # return self.model(inps)[0]
             res = self.model(inps)
             print(f'>>>res in _model_call\n: >shape\n: {res.shape}, {res[0].shape}')
+            print(f'>>>raw res\n: {res}')
+            import sys
+            print('>>> stop here <<<')
+            sys.exit(0)
             return res[0]
 
     def _model_generate(self, context, max_length, eos_token_id):
