@@ -230,7 +230,11 @@ class BaseLM(LM):
 
             new_reqs.append(((context, continuation), context_enc, continuation_enc))
 
-        return self._loglikelihood_tokens(new_reqs)
+        # return self._loglikelihood_tokens(new_reqs)
+
+        res = self._loglikelihood_tokens(new_reqs)
+        print(f'>>>res in loglikelihood in base.py:  type: {type(res)}, data: {res}')
+        return res
 
     def loglikelihood_rolling(self, requests):
         # TODO: Implement caching once we've confirmed the perplexity implementation
