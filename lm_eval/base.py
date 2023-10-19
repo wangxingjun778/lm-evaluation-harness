@@ -386,6 +386,7 @@ class BaseLM(LM):
             for (cache_key, _, _), logits, inp, inplen, cont_toks in zip(
                 chunk, multi_logits, inps, inplens, cont_toks_list
             ):
+                print(f'>>>zip in _loglikelihood_tokens:\n  >logits: {logits.shape}\n  >inp: {inp.shape}\n  >inplen: {inplen}\n  >cont_toks: {len(cont_toks)}')
 
                 # Slice to original seq length
                 contlen = len(cont_toks)
@@ -409,9 +410,8 @@ class BaseLM(LM):
                     -1
                 )  # [1, seq]
 
-                # Answer: (log prob, is-exact-match)
+                # Answer: (log prob, is-exact-match) -->Example: (-6.39453125, False)
                 answer = (float(logits.sum()), bool(max_equal))
-                print(f'>>>answer in _loglikelihood_tokens: {answer}')
 
                 # partial caching
                 if cache_key is not None:
