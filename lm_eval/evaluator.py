@@ -352,8 +352,8 @@ def evaluate(
         task = task_dict[task_name]
         doc = docs[(task_name, doc_id)]
 
+        # one of metrics: {'mc1': False, 'mc2': 0.9193982485517667}
         metrics = task.process_results(doc, requests)
-        print(f'>>>metrics in evaluator:\n  >metrics:\n {metrics}, \n>task_name: {task_name}')
         for metric, value in metrics.items():
             vals[(task_name, metric)].append(value)
 
@@ -365,6 +365,7 @@ def evaluate(
                 if doc_id not in overlaps[task_name]:
                     vals[(task_name, metric + decontaminate_suffix)].append(value)
 
+    # vals: {('truthfulqa_mc', 'mc1'): [False, True, ...], ('truthful_mc', 'mc2'): [0.9192, 0.9111, ...]}
     print(f'>>>vals in evaluator: {vals}')
 
     # aggregate results
