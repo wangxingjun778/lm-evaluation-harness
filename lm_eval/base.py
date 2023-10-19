@@ -377,7 +377,7 @@ class BaseLM(LM):
                     dim=0,
                 )
 
-                if tmp_j == 0:
+                if tmp_j == 0 and tmp_j == 0:
                     print(f'>>> inp in _loglikelihood_tokens in base.py\n: \n>data: {inp},  \n>shape: {inp.shape}')
                     tmp_j += 1
 
@@ -389,7 +389,7 @@ class BaseLM(LM):
             if tmp_i == 0:
                 print(f'>>> real input -- batched_inps in _loglikelihood_tokens in base.py\n: \n>data: {batched_inps},  \n>shape: {batched_inps.shape}')
 
-            # TODO: Note: core function call !!
+            # TODO: Note by jason: core function call !!
             multi_logits = F.log_softmax(
                 self._model_call(batched_inps), dim=-1
             ).cpu()  # [batch, padding_length, vocab]
