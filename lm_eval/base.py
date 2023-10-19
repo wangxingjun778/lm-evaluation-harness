@@ -932,10 +932,7 @@ class CachingLM:
                     remaining_reqs.append(req)
 
             # actually run the LM on the requests that do not have cached results
-            tmp = getattr(self.lm, attr)
-            print(f'>>>tmp: {tmp}')
-            print(f'>>>tmp type: {type(tmp)}')
-
+            # call: lm_eval.base.BaseLM.loglikelihood
             rem_res = getattr(self.lm, attr)(remaining_reqs)
 
             # stick the new ones back into the list and also cache any of the new ones
