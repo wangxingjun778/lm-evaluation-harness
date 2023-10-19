@@ -196,6 +196,8 @@ class HFLM(BaseLM):
             # let res = self.model(inps): CausalLMOutputWithPast; res[0] shape: torch.Size([1, 222, 50304])
             # return self.model(inps)[0]
 
+            print(f'>>>inps: {inps.shape}')
+
             res = self.model(inps)[0]
             print(f'>>>res shape: {res.shape}')
             print(f'>>>res: {res}')
