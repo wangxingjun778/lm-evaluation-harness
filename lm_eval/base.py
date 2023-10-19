@@ -404,6 +404,7 @@ class BaseLM(LM):
 
                 # Check if per-token argmax is exactly equal to continuation
                 greedy_tokens = logits.argmax(dim=-1)
+                print(f'>>>greedy_tokens: {greedy_tokens}')
                 cont_toks = torch.tensor(cont_toks, dtype=torch.long).unsqueeze(
                     0
                 )  # [1, seq]
@@ -414,6 +415,7 @@ class BaseLM(LM):
                 logits = torch.gather(logits, 2, cont_toks.unsqueeze(-1)).squeeze(
                     -1
                 )  # [1, seq]
+                print(f'>>>logits vs greedy: {logits}')
 
                 # Answer: (log prob, is-exact-match) -->Example: (-6.39453125, False)
                 answer = (float(logits.sum()), bool(max_equal))
