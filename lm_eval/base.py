@@ -234,6 +234,10 @@ class BaseLM(LM):
 
         res = self._loglikelihood_tokens(new_reqs)
         print(f'>>>res in loglikelihood in base.py:  type: {type(res)}, data: {res}')
+
+        import sys
+        print('>>> stop here <<<')
+        sys.exit(0)
         return res
 
     def loglikelihood_rolling(self, requests):
