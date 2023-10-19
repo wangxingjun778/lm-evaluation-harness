@@ -931,12 +931,12 @@ class CachingLM:
 
             # actually run the LM on the requests that do not have cached results
             print(f'>>> real func: {getattr(self.lm, attr)}')
-            print(f'>>> real input: {remaining_reqs}')
+            print(f'>>> real input: {remaining_reqs}')      # TODO: remaining_reqs = []  why is this empty?
 
 
-            import sys
-            print('>>>>> stop here >>>>>>>')
-            sys.exit()
+            # import sys
+            # print('>>>>> stop here >>>>>>>')
+            # sys.exit()
 
             rem_res = getattr(self.lm, attr)(remaining_reqs)
 

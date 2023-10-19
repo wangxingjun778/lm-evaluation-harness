@@ -314,6 +314,15 @@ def evaluate(
         # truthfulqa_mc: loglikelihood   truthfulqa_gen: greedy_until
         print("** Running", reqtype, "requests ...\n")
         resps = getattr(lm, reqtype)([req.args for req in reqs])
+
+        print(f'>>>type resp: {type(resps)}')   # list
+        print(f'>>>len resp: {len(resps)}')     # 1
+        print(f'>>> resp example: {resps[0]}')
+
+        import sys
+        print('>>>> stop here <<<< ...')
+        sys.exit(0)
+
         resps = [
             x if req.index is None else x[req.index] for x, req in zip(resps, reqs)
         ]
