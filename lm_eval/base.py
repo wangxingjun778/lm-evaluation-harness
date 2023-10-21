@@ -382,8 +382,19 @@ class BaseLM(LM):
                   f'\n  >shape: {batched_inps.shape}'
                   f'\n  >data: {batched_inps[0]}')
 
+            print(f'\n>>type of self._model_call:  type: {type(self._model_call)}, obj: {self._model_call}')
+
             # TODO: Note by jason: core function call !!
             call_output = self._model_call(batched_inps)
+            #   >shape: torch.Size([1, 263, 32000])
+            #   >data: tensor([[ -3.9863,  -3.1758,   1.8086,  ...,  -0.6797,   0.1420,  -1.9326],
+            #         [-13.9453, -12.3359,  -0.3245,  ...,  -5.3398,  -9.4766,  -5.4844],
+            #         [-10.9844,  -8.5312,  -0.8594,  ...,  -6.6641,  -7.0430,  -8.0078],
+            #         ...,
+            #         [ -9.0391,  -8.8203,   3.9395,  ...,  -6.0078,  -5.3125,  -5.7070],
+            #         [ -9.0312,  -7.4805,   5.8906,  ...,  -5.1133,  -3.1543,  -1.4307],
+            #         [ -7.3516,  -3.3066,  11.0078,  ...,  -4.0820,  -4.0156,  -3.9180]],
+            #        device='cuda:0')
             print(f'\n\n>>call_output: '
                   f'\n  >shape: {call_output.shape}'
                   f'\n  >data: {call_output[0]}')
