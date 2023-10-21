@@ -382,6 +382,7 @@ class BaseLM(LM):
                   f'\n  >shape: {batched_inps.shape}'
                   f'\n  >data: {batched_inps[0]}')
 
+            # like : lm_eval.models.gpt2.HFLM._model_call()
             print(f'\n>>type of self._model_call:  type: {type(self._model_call)}, obj: {self._model_call}')
 
             # TODO: Note by jason: core function call !!
