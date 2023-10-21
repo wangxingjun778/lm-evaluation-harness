@@ -378,10 +378,16 @@ class BaseLM(LM):
 
             batched_inps = torch.cat(inps, dim=0)  # [batch, padding_length]
 
+            print(f'\n\n>>batched_inps: '
+                  f'\n  >shape: {batched_inps.shape}'
+                  f'\n  >data: {batched_inps[0]}')
+
             # TODO: Note by jason: core function call !!
-            multi_logits = F.log_softmax(
-                self._model_call(batched_inps), dim=-1
-            ).cpu()  # [batch, padding_length, vocab]
+            call_output = self._model_call(batched_inps)
+            print(f'\n\n>>call_output: '
+                  f'\n  >shape: {call_output.shape}'
+                  f'\n  >data: {call_output[0]}')
+            multi_logits = F.log_softmax(call_output, dim=-1).cpu()  # [batch, padding_length, vocab]
 
             for (cache_key, _, _), logits, inp, inplen, cont_toks in zip(
                 chunk, multi_logits, inps, inplens, cont_toks_list
@@ -391,7 +397,7 @@ class BaseLM(LM):
                 #   >inplen: 83
                 #   >cont_toks: [378]
                 #   >padding_length: 83
-                print(f'>>>zip in _loglikelihood_tokens:\n  >logits: {logits.shape}\n  >inp: {inp.shape}\n  >inplen: {inplen}\n  >cont_toks: {cont_toks}\n, >pandding_length: {padding_length}')
+                print(f'\n>>>zip in _loglikelihood_tokens:\n  >logits: {logits.shape}\n  >inp: {inp.shape}\n  >inplen: {inplen}\n  >cont_toks: {cont_toks}\n, >pandding_length: {padding_length}')
 
                 # Slice to original seq length
                 contlen = len(cont_toks)
