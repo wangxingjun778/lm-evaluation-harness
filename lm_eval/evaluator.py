@@ -354,7 +354,7 @@ def evaluate(
 
         # one of metrics: {'mc1': False, 'mc2': 0.9193982485517667}
         # doc for ceval: {'query': '局域网的协议结构包括____。\nⅠ．网络层Ⅱ．数据链路层\nⅢ．物理层Ⅳ．介质访问控制层\nA. Ⅰ、Ⅱ、Ⅲ\nB. Ⅰ、Ⅱ、Ⅳ\nC. Ⅰ、Ⅲ、Ⅳ\nD. Ⅱ、Ⅲ、Ⅳ\n答案：', 'choices': ['A', 'B', 'C', 'D'], 'gold': 3}
-        # requests for ceval: [-8.3046875, -9.3046875, -8.8046875, -9.8046875]
+        # e.g. requests for one doc() on ceval: [-8.3046875, -9.3046875, -8.8046875, -9.8046875]
         metrics = task.process_results(doc, requests)
         for metric, value in metrics.items():
             vals[(task_name, metric)].append(value)

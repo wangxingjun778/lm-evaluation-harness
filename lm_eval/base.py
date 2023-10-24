@@ -216,7 +216,7 @@ class BaseLM(LM):
     def loglikelihood(self, requests):
 
         print(f'>>>call loglikelihood in base.py, len of requests: {len(requests)}')
-        print(f'>>request example in loglikelihood in base.py: {requests[0]}')
+        print(f'>>request example in loglikelihood in base.py: {requests[0]}')   # ('xxx, xxx\n, xxx', 'xxxx')
 
         new_reqs = []
         for context, continuation in requests:
@@ -280,7 +280,7 @@ class BaseLM(LM):
         # TODO: implement some kind of efficient-request-middleware that lumps together requests with the same context
         res = []
 
-        print(f'>>> input requests in _loglikelihood_tokens in base.py\n: {requests[0]}')
+        print(f'>>> input requests in _loglikelihood_tokens in base.py:\n {requests[0]}')
 
         def _collate(x):
             # the negative sign on len(toks) sorts descending - this has a few advantages:
@@ -430,6 +430,7 @@ class BaseLM(LM):
 
                 # Obtain log-probs at the corresponding continuation token indices
                 # last_token_slice = logits[:, -1, :].squeeze(0).tolist()
+                # logits: [1, seq, vocab]   cont_toks: [1, seq]
                 logits = torch.gather(logits, 2, cont_toks.unsqueeze(-1)).squeeze(
                     -1
                 )  # [1, seq]

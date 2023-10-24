@@ -1,5 +1,6 @@
 import torch
 import transformers
+from modelscope.utils.hf_util import AutoModelForCausalLM, AutoTokenizer
 from typing import Optional, Union
 from lm_eval.base import BaseLM
 
@@ -79,7 +80,9 @@ class HFLM(BaseLM):
             revision = revision + ("/" + subfolder if subfolder is not None else "")
 
             # Initialize new model and tokenizer instances
-            self.model = transformers.AutoModelForCausalLM.from_pretrained(
+            # TODO: ONLY FOR TEST !
+            # self.model = transformers.AutoModelForCausalLM.from_pretrained(
+            self.model = AutoModelForCausalLM.from_pretrained(
                 pretrained,
                 load_in_8bit=load_in_8bit,
                 low_cpu_mem_usage=low_cpu_mem_usage,
@@ -87,7 +90,10 @@ class HFLM(BaseLM):
                 torch_dtype=_get_dtype(dtype),
                 trust_remote_code=trust_remote_code,
             ).to(self.device)
-            self.tokenizer = transformers.AutoTokenizer.from_pretrained(
+
+            # TODO: ONLY FOR TEST !
+            # self.tokenizer = transformers.AutoTokenizer.from_pretrained(
+            self.tokenizer = AutoTokenizer.from_pretrained(
                 tokenizer if tokenizer else pretrained,
                 revision=revision,
                 trust_remote_code=trust_remote_code,
@@ -195,6 +201,7 @@ class HFLM(BaseLM):
         with torch.no_grad():
             # res = self.model(inps): CausalLMOutputWithPast; res[0] shape: torch.Size([1, 222, 50304])
             # for ceval: inps shape: torch.Size([1, 83]), shape: torch.Size([1, 83, 50304])
+            # self.model: LlamaForCausalLM (for llama2)
             print(f'>>self.model: {self.model}')
             return self.model(inps)[0]
 
