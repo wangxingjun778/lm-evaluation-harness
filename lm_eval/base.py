@@ -216,7 +216,10 @@ class BaseLM(LM):
     def loglikelihood(self, requests):
 
         print(f'>>>call loglikelihood in base.py, len of requests: {len(requests)}')
-        print(f'>>request example in loglikelihood in base.py: {requests[0]}')   # ('xxx, xxx\n, xxx', 'xxxx')
+        print(f'>>request example in loglikelihood in base.py: '
+              f'\n>requests[0]: {requests[0]}'
+              f'\n>requests[1]: {requests[1]}')
+        # ('以下是中国关于计算机网络的单项选择题，请选出其中的正确答案。\n\n局域网的协议结构包括____。\nⅠ．网络层Ⅱ．数据链路层\nⅢ．物理层Ⅳ．介质访问控制层\nA. Ⅰ、Ⅱ、Ⅲ\nB. Ⅰ、Ⅱ、Ⅳ\nC. Ⅰ、Ⅲ、Ⅳ\nD. Ⅱ、Ⅲ、Ⅳ\n答案：', ' A')
 
         new_reqs = []
         for context, continuation in requests:
@@ -281,6 +284,7 @@ class BaseLM(LM):
         res = []
 
         print(f'>>> input requests in _loglikelihood_tokens in base.py:\n {requests[0]}')
+        #(('以下是中国关于计算机网络的单项选择题，请选出其中的正确答案。\n\n局域网的协议结构包括____。\nⅠ．网络层Ⅱ．数据链路层\nⅢ．物理层Ⅳ．介质访问控制层\nA. Ⅰ、Ⅱ、Ⅲ\nB. Ⅰ、Ⅱ、Ⅳ\nC. Ⅰ、Ⅲ、Ⅳ\nD. Ⅱ、Ⅲ、Ⅳ\n答案：', ' A'), [29871, 30651, 30557, ..., 164, 139, 30383], [319])
 
         def _collate(x):
             # the negative sign on len(toks) sorts descending - this has a few advantages:
@@ -418,22 +422,18 @@ class BaseLM(LM):
                 )  # if "virtual tokens" (from prompt tuning) are added, inplen is larger
                 logits = logits[inplen - contlen : inplen].unsqueeze(
                     0
-                )  # [1, seq, vocab]
+                )  # [1, seq, vocab]    # seq = len(continuation tokens)
 
                 # Check if per-token argmax is exactly equal to continuation
                 greedy_tokens = logits.argmax(dim=-1)
                 print(f'>>>greedy_tokens: {greedy_tokens}')
-                cont_toks = torch.tensor(cont_toks, dtype=torch.long).unsqueeze(
-                    0
-                )  # [1, seq]
+                cont_toks = torch.tensor(cont_toks, dtype=torch.long).unsqueeze(0)      # [1, seq]
                 max_equal = (greedy_tokens == cont_toks).all()      # tensor(True) or tensor(False)
 
                 # Obtain log-probs at the corresponding continuation token indices
                 # last_token_slice = logits[:, -1, :].squeeze(0).tolist()
                 # logits: [1, seq, vocab]   cont_toks: [1, seq]
-                logits = torch.gather(logits, 2, cont_toks.unsqueeze(-1)).squeeze(
-                    -1
-                )  # [1, seq]
+                logits = torch.gather(logits, 2, cont_toks.unsqueeze(-1)).squeeze(-1)   # [1, seq]
                 print(f'>>>logits vs greedy: {logits}')
 
                 # Answer: (log prob, is-exact-match) -->Example: (-6.39453125, False)
