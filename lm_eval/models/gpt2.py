@@ -23,7 +23,7 @@ class HFLM(BaseLM):
         self,
         device="cuda",
         pretrained="gpt2",
-        revision="v1.0.2",    # TODO: main
+        revision="main",
         low_cpu_mem_usage=None,
         subfolder=None,
         tokenizer=None,
@@ -80,23 +80,19 @@ class HFLM(BaseLM):
             revision = revision + ("/" + subfolder if subfolder is not None else "")
 
             # Initialize new model and tokenizer instances
-            # TODO: ONLY FOR TEST !
-            # self.model = transformers.AutoModelForCausalLM.from_pretrained(
-            self.model = AutoModelForCausalLM.from_pretrained(
+            self.model = transformers.AutoModelForCausalLM.from_pretrained(
                 pretrained,
                 load_in_8bit=load_in_8bit,
                 low_cpu_mem_usage=low_cpu_mem_usage,
                 revision=revision,
                 torch_dtype=_get_dtype(dtype),
-                trust_remote_code=True,     # TODO: trust_remote_code
+                trust_remote_code=trust_remote_code,
             ).to(self.device)
 
-            # TODO: ONLY FOR TEST !
-            # self.tokenizer = transformers.AutoTokenizer.from_pretrained(
-            self.tokenizer = AutoTokenizer.from_pretrained(
+            self.tokenizer = transformers.AutoTokenizer.from_pretrained(
                 tokenizer if tokenizer else pretrained,
                 revision=revision,
-                trust_remote_code=True,  # TODO: trust_remote_code,
+                trust_remote_code=trust_remote_code,
             )
 
         else:
