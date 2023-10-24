@@ -1,6 +1,5 @@
 import torch
 import transformers
-from modelscope.utils.hf_util import AutoModelForCausalLM, AutoTokenizer
 from typing import Optional, Union
 from lm_eval.base import BaseLM
 
