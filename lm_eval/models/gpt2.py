@@ -88,7 +88,7 @@ class HFLM(BaseLM):
                 low_cpu_mem_usage=low_cpu_mem_usage,
                 revision=revision,
                 torch_dtype=_get_dtype(dtype),
-                trust_remote_code=trust_remote_code,
+                trust_remote_code=True,     # TODO: trust_remote_code
             ).to(self.device)
 
             # TODO: ONLY FOR TEST !
@@ -96,7 +96,7 @@ class HFLM(BaseLM):
             self.tokenizer = AutoTokenizer.from_pretrained(
                 tokenizer if tokenizer else pretrained,
                 revision=revision,
-                trust_remote_code=trust_remote_code,
+                trust_remote_code=True,  # TODO: trust_remote_code,
             )
 
         else:
