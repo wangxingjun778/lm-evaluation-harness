@@ -23,7 +23,7 @@ class HFLM(BaseLM):
         self,
         device="cuda",
         pretrained="gpt2",
-        revision="main",
+        revision="v1.0.2",    # TODO: main
         low_cpu_mem_usage=None,
         subfolder=None,
         tokenizer=None,
