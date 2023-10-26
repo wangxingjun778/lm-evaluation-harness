@@ -30,7 +30,7 @@ class HFLM(BaseLM):
         max_batch_size=512,
         max_length=None,
         load_in_8bit: Optional[bool] = False,
-        trust_remote_code: Optional[bool] = False,
+        trust_remote_code: Optional[bool] = True,
         dtype: Optional[Union[str, torch.dtype]] = "auto",
     ):
         super().__init__()
