@@ -323,7 +323,7 @@ def evaluate(
             x if req.index is None else x[req.index] for x, req in zip(resps, reqs)
         ]
 
-        print(f'>>> resp example: {resps[0]}')  # -12.4453125
+        print(f'>>> resps: {resps}')  # [-12.4453125, ...]
 
         for resp, (i, task_name, doc, doc_id) in zip(resps, requests_origin[reqtype]):
             process_res_queue[(task_name, doc_id)].append((i, resp))
