@@ -581,13 +581,21 @@ class Task(abc.ABC):
             - `datasets.DownloadMode.FORCE_REDOWNLOAD`
                 Fresh download and fresh dataset.
         """
-        self.dataset = datasets.load_dataset(
-            path=self.DATASET_PATH,
-            name=self.DATASET_NAME,
-            data_dir=data_dir,
-            cache_dir=cache_dir,
-            download_mode=download_mode,
-        )
+        # TODO: ONLY FOR TEST
+        # self.dataset = datasets.load_dataset(
+        #     path=self.DATASET_PATH,
+        #     name=self.DATASET_NAME,
+        #     data_dir=data_dir,
+        #     cache_dir=cache_dir,
+        #     download_mode=download_mode,
+        # )
+
+        from modelscope.msdatasets.ms_dataset import MsDataset
+        self.dataset = MsDataset.load(self.DATASET_PATH,
+                                      data_dir=data_dir,
+                                      cache_dir=cache_dir)
+
+
 
     def should_decontaminate(self):
         """Whether this task supports decontamination against model training set."""
