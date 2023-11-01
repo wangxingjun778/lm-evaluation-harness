@@ -79,7 +79,9 @@ class HFLM(BaseLM):
             revision = revision + ("/" + subfolder if subfolder is not None else "")
 
             # Initialize new model and tokenizer instances
-            self.model = transformers.AutoModelForCausalLM.from_pretrained(
+            from modelscope.utils.hf_util import AutoModelForCausalLM       # TODO: ONLY FOR TEST !
+            # self.model = transformers.AutoModelForCausalLM.from_pretrained(
+            self.model = AutoModelForCausalLM.from_pretrained(
                 pretrained,
                 load_in_8bit=load_in_8bit,
                 low_cpu_mem_usage=low_cpu_mem_usage,
@@ -88,7 +90,9 @@ class HFLM(BaseLM):
                 trust_remote_code=trust_remote_code,
             ).to(self.device)
 
-            self.tokenizer = transformers.AutoTokenizer.from_pretrained(
+            from modelscope.utils.hf_util import AutoTokenizer      # TODO: ONLY FOR TEST
+            # self.tokenizer = transformers.AutoTokenizer.from_pretrained(
+            self.tokenizer = AutoTokenizer.from_pretrained(
                 tokenizer if tokenizer else pretrained,
                 revision=revision,
                 trust_remote_code=trust_remote_code,
