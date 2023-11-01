@@ -591,7 +591,7 @@ class Task(abc.ABC):
         # )
 
         from modelscope.msdatasets.ms_dataset import MsDataset
-        self.dataset = MsDataset.load(self.DATASET_PATH,
+        self.dataset = MsDataset.load('hellaswag',
                                       data_dir=data_dir,
                                       cache_dir=cache_dir)
 
