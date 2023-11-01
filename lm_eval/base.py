@@ -352,6 +352,7 @@ class BaseLM(LM):
                 # cont_toks      4 5 6 7 8 9      [:, -len(continuation_enc):, :self.vocab_size] slice
 
                 # when too long to fit in context, truncate from the left
+                print(f'>>>max_length in base.py: {self.max_length}')
                 inp = torch.tensor(
                     (context_enc + continuation_enc)[-(self.max_length + 1) :][:-1],
                     dtype=torch.long,
