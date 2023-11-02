@@ -584,16 +584,16 @@ class Task(abc.ABC):
                 Fresh download and fresh dataset.
         """
         # TODO: ONLY FOR TEST
-        # self.dataset = datasets.load_dataset(
-        #     path=self.DATASET_PATH,
-        #     name=self.DATASET_NAME,
-        #     data_dir=data_dir,
-        #     cache_dir=cache_dir,
-        #     download_mode=download_mode,
-        # )
+        self.dataset = datasets.load_dataset(
+            path=self.DATASET_PATH,
+            name=self.DATASET_NAME,
+            data_dir=data_dir,
+            cache_dir=cache_dir,
+            download_mode=download_mode,
+        )
 
-        from modelscope.msdatasets.ms_dataset import MsDataset
-        self.dataset = MsDataset.load(self.DATASET_PATH)
+        # from modelscope.msdatasets.ms_dataset import MsDataset
+        # self.dataset = MsDataset.load(self.DATASET_PATH)
 
 
 
