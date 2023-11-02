@@ -233,7 +233,14 @@ class BaseLM(LM):
 
             new_reqs.append(((context, continuation), context_enc, continuation_enc))
 
-        return self._loglikelihood_tokens(new_reqs)   # list, [(-12.4453125, False), (-12.3671875, False), ...]
+        res = self._loglikelihood_tokens(new_reqs)   # list, [(-12.4453125, False), (-12.3671875, False), ...]
+
+        for (ctx, cont), (log_score, greedy_bool) in zip(requests, res):
+            print('==================================================')
+            print((ctx, cont), (log_score, greedy_bool))
+            print('\n')
+
+        return res
 
     def loglikelihood_rolling(self, requests):
         # TODO: Implement caching once we've confirmed the perplexity implementation
@@ -352,7 +359,7 @@ class BaseLM(LM):
                 # cont_toks      4 5 6 7 8 9      [:, -len(continuation_enc):, :self.vocab_size] slice
 
                 # when too long to fit in context, truncate from the left
-                print(f'>>>max_length in base.py: {self.max_length}')
+                # print(f'>>>max_length in base.py: {self.max_length}')
                 inp = torch.tensor(
                     (context_enc + continuation_enc)[-(self.max_length + 1) :][:-1],
                     dtype=torch.long,
@@ -383,12 +390,12 @@ class BaseLM(LM):
 
             batched_inps = torch.cat(inps, dim=0)  # [batch, padding_length]
 
-            print(f'\n\n>>batched_inps: '
-                  f'\n  >shape: {batched_inps.shape}'
-                  f'\n  >data: {batched_inps[0]}')
+            # print(f'\n\n>>batched_inps: '
+            #       f'\n  >shape: {batched_inps.shape}'
+            #       f'\n  >data: {batched_inps[0]}')
 
             # like : lm_eval.models.gpt2.HFLM._model_call()
-            print(f'\n>>type of self._model_call:  type: {type(self._model_call)}, obj: {self._model_call}')
+            # print(f'\n>>type of self._model_call:  type: {type(self._model_call)}, obj: {self._model_call}')
 
             # TODO: Note by jason: core function call !!
             call_output = self._model_call(batched_inps)
@@ -401,9 +408,9 @@ class BaseLM(LM):
             #         [ -9.0312,  -7.4805,   5.8906,  ...,  -5.1133,  -3.1543,  -1.4307],
             #         [ -7.3516,  -3.3066,  11.0078,  ...,  -4.0820,  -4.0156,  -3.9180]],
             #        device='cuda:0')
-            print(f'\n\n>>call_output: '
-                  f'\n  >shape: {call_output.shape}'
-                  f'\n  >data: {call_output[0]}')
+            # print(f'\n\n>>call_output: '
+            #       f'\n  >shape: {call_output.shape}'
+            #       f'\n  >data: {call_output[0]}')
             multi_logits = F.log_softmax(call_output, dim=-1).cpu()  # [batch, padding_length, vocab]
 
             for (cache_key, _, _), logits, inp, inplen, cont_toks in zip(
@@ -414,7 +421,7 @@ class BaseLM(LM):
                 #   >inplen: 83
                 #   >cont_toks: [378]
                 #   >padding_length: 83
-                print(f'\n>>>zip in _loglikelihood_tokens:\n  >logits: {logits.shape}\n  >inp: {inp.shape}\n  >inplen: {inplen}\n  >cont_toks: {cont_toks}\n, >pandding_length: {padding_length}')
+                # print(f'\n>>>zip in _loglikelihood_tokens:\n  >logits: {logits.shape}\n  >inp: {inp.shape}\n  >inplen: {inplen}\n  >cont_toks: {cont_toks}\n, >pandding_length: {padding_length}')
 
                 # Slice to original seq length
                 contlen = len(cont_toks)
@@ -427,7 +434,7 @@ class BaseLM(LM):
 
                 # Check if per-token argmax is exactly equal to continuation
                 greedy_tokens = logits.argmax(dim=-1)
-                print(f'>>>greedy_tokens: {greedy_tokens}')
+                # print(f'>>>greedy_tokens: {greedy_tokens}')
                 cont_toks = torch.tensor(cont_toks, dtype=torch.long).unsqueeze(0)      # [1, seq]
                 max_equal = (greedy_tokens == cont_toks).all()      # tensor(True) or tensor(False)
 
@@ -435,11 +442,11 @@ class BaseLM(LM):
                 # last_token_slice = logits[:, -1, :].squeeze(0).tolist()
                 # logits: [1, seq, vocab]   cont_toks: [1, seq]
                 logits = torch.gather(logits, 2, cont_toks.unsqueeze(-1)).squeeze(-1)   # [1, seq]
-                print(f'>>>logits vs greedy: {logits}')
+                # print(f'>>>logits vs greedy: {logits}')
 
                 # Answer: (log prob, is-exact-match) -->Example: (-6.39453125, False)
                 answer = (float(logits.sum()), bool(max_equal))
-                print(f'>>>answer: {answer}')
+                # print(f'>>>answer: {answer}')
 
                 # partial caching
                 if cache_key is not None:
@@ -447,8 +454,8 @@ class BaseLM(LM):
 
                 res.append(answer)
 
-        print(f'>>>res in _loglikelihood_tokens in base.py: {res}')
-        print(f'\n>>>final answer for logits: {re_ord.get_original(res)}')
+        # print(f'>>>res in _loglikelihood_tokens in base.py: {res}')
+        # print(f'\n>>>final answer for logits: {re_ord.get_original(res)}')
 
         return re_ord.get_original(res)
 
@@ -585,16 +592,16 @@ class Task(abc.ABC):
                 Fresh download and fresh dataset.
         """
         # TODO: ONLY FOR TEST
-        self.dataset = datasets.load_dataset(
-            path=self.DATASET_PATH,
-            name=self.DATASET_NAME,
-            data_dir=data_dir,
-            cache_dir=cache_dir,
-            download_mode=download_mode,
-        )
+        # self.dataset = datasets.load_dataset(
+        #     path=self.DATASET_PATH,
+        #     name=self.DATASET_NAME,
+        #     data_dir=data_dir,
+        #     cache_dir=cache_dir,
+        #     download_mode=download_mode,
+        # )
 
-        # from modelscope.msdatasets.ms_dataset import MsDataset
-        # self.dataset = MsDataset.load(self.DATASET_PATH)
+        from modelscope.msdatasets.ms_dataset import MsDataset
+        self.dataset = MsDataset.load(self.DATASET_PATH)
 
 
 
