@@ -447,6 +447,8 @@ class BaseLM(LM):
 
                 res.append(answer)
 
+        print(f'\n>>>final answer for logits: {re_ord.get_original(res)}')
+
         return re_ord.get_original(res)
 
     def greedy_until(self, requests):
