@@ -447,6 +447,7 @@ class BaseLM(LM):
 
                 res.append(answer)
 
+        print(f'>>>res in _loglikelihood_tokens in base.py: {res}')
         print(f'\n>>>final answer for logits: {re_ord.get_original(res)}')
 
         return re_ord.get_original(res)
