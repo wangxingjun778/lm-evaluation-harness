@@ -64,6 +64,7 @@ class GradeSchoolMath8K(Task):
         return "Question: " + doc["question"] + "\nAnswer:"
 
     def doc_to_target(self, doc):
+        print(f'>>doc: {doc}')
         return " " + doc["answer"]
 
     def construct_requests(self, doc, ctx):
