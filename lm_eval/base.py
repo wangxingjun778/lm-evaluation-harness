@@ -601,7 +601,7 @@ class Task(abc.ABC):
 
         from modelscope.msdatasets.ms_dataset import MsDataset
         # self.dataset = MsDataset.load(self.DATASET_PATH)
-        self.dataset = MsDataset.load('ai2_arc', subset_name='ARC-Challenge')
+        self.dataset = MsDataset.load('gsm8k')
 
 
 
