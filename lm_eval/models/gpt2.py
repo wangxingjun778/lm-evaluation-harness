@@ -231,6 +231,9 @@ class HFLM(BaseLM):
             generation_kwargs[
                 "pad_token_id"
             ] = eos_token_id  # setting eos_token_id as pad token
+
+        print(f'>>true_generation_kwargs:\n{generation_kwargs}')
+
         return self.model.generate(context, **generation_kwargs)
 
 
