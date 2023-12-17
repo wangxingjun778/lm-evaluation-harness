@@ -312,6 +312,7 @@ def evaluate(
         #       they should end up next to each other.
 
         # truthfulqa_mc: loglikelihood   truthfulqa_gen: greedy_until
+        # greedy_until: lm_eval.base.BaseLM.greedy_until
         print("** Running", reqtype, "requests ...\n")
         print(f'>>input reqs: {[req.args for req in reqs]}')
         resps = getattr(lm, reqtype)([req.args for req in reqs])

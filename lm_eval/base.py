@@ -480,7 +480,7 @@ class BaseLM(LM):
 
         warn_stop_seq = False
         for context, request_args in tqdm(re_ord.get_reordered()):
-            until = request_args["until"]
+            until = request_args["until"]  # e.g.  [':', 'Question:', 'Question']
             if isinstance(until, str):
                 until = [until]
 
