@@ -205,12 +205,25 @@ class HFLM(BaseLM):
             return self.model(inps)[0]
 
     def _model_generate(self, context, max_length, eos_token_id):
-        print('>>> _model_generate: ')
-        print(f'>>context:\n{context}')
-        print(f'>>max_length:\n{max_length}')
-        print(f'>>eos_token_id:\n{eos_token_id}')
+        print('\n>>> _model_generate: ')
+        print(f'>>context:\n{context}, >shape:{context.shape}')     # tensor([[37857, 92345,  3144,  ...,     5, 58182, 92345]], device='cuda:0')
+        print(f'>>max_length:\n{max_length}')       # 1898
+        print(f'>>eos_token_id:\n{eos_token_id}')       # 92345
         if hasattr(self.model, 'generation_config'):
             print(f'>>generation_config:\n{self.model.generation_config}')
+            # GenerationConfig {
+            #   "assistant_token_id": 196,
+            #   "bos_token_id": 1,
+            #   "do_sample": true,      # --> false
+            #   "eos_token_id": 2,
+            #   "max_new_tokens": 2048,
+            #   "pad_token_id": 0,
+            #   "repetition_penalty": 1.05,
+            #   "temperature": 0.3,
+            #   "top_k": 5,
+            #   "top_p": 0.85,
+            #   "user_token_id": 195
+            # }
 
         generation_kwargs = {"do_sample": False, "max_length": max_length}
         if eos_token_id is not None:
