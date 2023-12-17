@@ -504,6 +504,8 @@ class BaseLM(LM):
             max_gen_tokens = min(
                 self.max_gen_toks, request_args.get("max_length", self.max_gen_toks)
             )
+
+            print(f'\n>>context str: {context}\n')
             cont = self._model_generate(
                 context_enc, context_enc.shape[1] + max_gen_tokens, primary_until
             )
